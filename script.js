@@ -19,14 +19,22 @@ const diceResult = document.getElementById('diceResult');
 // Wallet connection function
 async function connectSlushWallet() {
   try {
-    // Initialize SuiClient for Mainnet
-    const { SuiClient } = window.Sui; // Loaded via script or module
-    const client = new SuiClient({ url: 'https://fullnode.mainnet.sui.io' });
+    // Check for Sui SDK
+    if (!window.Sui) {
+      throw new Error('Sui SDK not loaded. Please check your network or CDN.');
+    }
 
-    // Check for Slush Wallet extension
+    // Initialize SuiClient with multiple RPCs for reliability
+    const { SuiClient } = window.Sui;
+    const client = new SuiClient({
+      url: 'https://fullnode.mainnet.sui.io',
+      fallbackUrls: ['https://rpc.mainnet.sui.io', 'https://sui-mainnet.rpcpool.com']
+    });
+
+    // Check for Slush Wallet
     const slushWallet = window.suiWallet;
     if (!slushWallet) {
-      throw new Error('Slush Wallet extension not detected. Please install it from the Chrome Web Store.');
+      throw new Error('Slush Wallet extension not detected. Please install it from the Chrome Web Store or ensure it is enabled.');
     }
 
     // Request connection permissions
@@ -35,7 +43,7 @@ async function connectSlushWallet() {
     // Get wallet accounts
     const accounts = await slushWallet.getAccounts();
     if (accounts.length === 0) {
-      throw new Error('No accounts found in Slush Wallet. Please set up your wallet.');
+      throw new Error('No accounts found in Slush Wallet. Please set up or import an account.');
     }
 
     // Store first account address
@@ -71,7 +79,9 @@ slushWalletBtn.addEventListener('click', () => {
   connectSlushWallet();
 });
 
-closeModalBtn.addEventListener('click', () => walletModal.classList.add('hidden'));
+closeModalBtn.addEventListener('click', () => {
+  walletModal.classList.add('hidden');
+});
 
 // Coinflip game simulation (no SUI)
 playCoinflipBtn.addEventListener('click', () => {
