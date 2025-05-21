@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Splashify - Sugary Gaming on Sui</title>
+  <!-- CSP for local scripts and Sui Mainnet RPCs -->
+  <meta http-equiv='Content-Security-Policy' content="default-src 'self'; script-src 'self'; connect-src 'self' https://fullnode.mainnet.sui.io https://rpc.mainnet.sui.io https://sui-mainnet.rpcpool.com; img-src 'self' https://via.placeholder.com;">
+  <link href='https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css' rel='stylesheet'>
+  <link rel='stylesheet' href='styles.css'>
+  <!-- Local Sui SDK -->
+  <script src='/sui.js'></script>
+</head>
+<body class='bg-cream'>
+  <!-- Header -->
+  <header class='header'>
+    <div class='container'>
+      <h1 class='logo'>Splashify</h1>
+      <button id='connectWallet' class='btn btn-primary wallet-btn'>Connect Wallet</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class='hero'>
+    <div class='container text-center'>
+      <h2 class='hero-title'>Join the Sugary Adventure!</h2>
+      <p class='hero-text'>Experience thrilling blockchain games on Sui with Splashify!</p>
+      <button id='connectWalletHero' class='btn btn-primary'>Play Now</button>
+    </div>
+  </section>
+
+  <!-- Games Section -->
+  <section class='games container'>
+    <h2 class='section-title'>Our Sugary Games</h2>
+    <div class='game-grid'>
+      <!-- Coinflip -->
+      <div class='game-card'>
+        <h3 class='game-title'>Coinflip</h3>
+        <p class='game-desc'>Flip the coin and test your luck!</p>
+        <select id='coinflipGuess' class='form-input'>
+          <option value='heads'>Heads</option>
+          <option value='tails'>Tails</option>
+        </select>
+        <button id='playCoinflip' class='btn btn-primary'>Play Now</button>
+        <p id='coinflipResult' class='game-result'></p>
+      </div>
+
+      <!-- Lootboxes -->
+      <div class='game-card'>
+        <h3 class='game-title'>Lootboxes</h3>
+        <p class='game-desc'>Unlock sweet surprises!</p>
+        <div class='flex items-center'>
+          <button id='buyLootbox' class='btn btn-primary disabled' disabled>Play Now</button>
+          <span class='coming-soon'>Coming Soon</span>
+        </div>
+        <p id='lootboxResult' class='game-result'></p>
+      </div>
+
+      <!-- Dice -->
+      <div class='game-card'>
+        <h3 class='game-title'>Dice</h3>
+        <p class='game-desc'>Roll the dice and win big!</p>
+        <select id='diceGuess' class='form-input'>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='3'>3</option>
+          <option value='4'>4</option>
+          <option value='5'>5</option>
+          <option value='6'>6</option>
+        </select>
+        <button id='rollDice' class='btn btn-primary'>Play Now</button>
+        <p id='diceResult' class='game-result'></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wallet Modal -->
+  <div id='walletModal' class='modal hidden'>
+    <div class='modal-content'>
+      <h3 class='modal-title'>Connect to Splashify</h3>
+      <p class='modal-text'>Use Slush Wallet to join the fun on Sui Mainnet!</p>
+      <button id='slushWallet' class='btn btn-primary flex items-center'>
+        <img src='https://via.placeholder.com/24' alt='Slush Wallet Icon' class='mr-2'> Slush Wallet
+      </button>
+      <button id='closeModal' class='btn btn-secondary'>Cancel</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class='footer'>
+    <div class='container text-center'>
+      <p>© 2025 Splashify. All rights reserved.</p>
+      <div class='social-links'>
+        <a href='#' class='social-link'>Twitter</a>
+        <a href='#' class='social-link'>Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src='script.js'></script>
+</body>
+</html>
