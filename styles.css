@@ -1,0 +1,83 @@
+/* Custom color variables */
+:root {
+  --pink: #FF69B4; /* Candy Pink for buttons, highlights */
+  --teal: #20B2AA; /* Teal for game cards, borders */
+  --cream: #F5F5F5; /* Cream for background */
+  --green: #32CD32; /* Lime Green for hover, rewards */
+  --navy: #1C2526; /* Navy Blue for text, headers */
+}
+
+/* Apply colors to Tailwind classes */
+.bg-cream {
+  background-color: var(--cream);
+}
+
+.text-cream {
+  color: var(--cream);
+}
+
+.bg-teal {
+  background-color: var(--teal);
+}
+
+.bg-pink {
+  background-color: var(--pink);
+}
+
+.text-navy {
+  color: var(--navy);
+}
+
+.bg-navy {
+  background-color: var(--navy);
+}
+
+.bg-green {
+  background-color: var(--green);
+}
+
+.text-green {
+  color: var(--green);
+}
+
+/* Game card hover effect */
+.game-card {
+  transition: transform 0.3s ease;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+/* Button focus and hover */
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.5);
+}
+
+/* Modal backdrop */
+#walletModal {
+  z-index: 1000;
+}
+
+/* Ensure inputs match theme */
+input, select {
+  background-color: var(--cream);
+  color: var(--navy);
+  border: 1px solid var(--teal);
+}
+
+input:focus, select:focus {
+  border-color: var(--pink);
+  outline: none;
+}
+
+/* Disabled button */
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Coming Soon text */
+.coming-soon {
+  font-weight: bold;
+}
