@@ -4,12 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Splashify - Decentralized Gaming</title>
-  <!-- CSP to allow Sui Mainnet RPC, CDN, and Slush Wallet -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net; connect-src 'self' https://fullnode.mainnet.sui.io https://rpc.mainnet.sui.io https://sui-mainnet.rpcpool.com; img-src 'self' https://via.placeholder.com;">
+  <!-- CSP to allow Sui Mainnet RPC, CDNs, and Slush Wallet -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://jsdelivr.net; connect-src 'self' https://fullnode.mainnet.sui.io https://rpc.mainnet.sui.io https://sui-mainnet.rpcpool.com; img-src 'self' https://via.placeholder.com;">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <!-- Sui SDK CDN (latest version) -->
-  <script src="https://cdn.jsdelivr.net/npm/@mysten/sui.js@latest/dist/index.js"></script>
+  <!-- Primary Sui SDK CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@mysten/sui.js@0.54.1/dist/index.js"></script>
+  <!-- Fallback Sui SDK CDN -->
+  <script>
+    if (!window.Sui) {
+      const fallbackScript = document.createElement('script');
+      fallbackScript.src = 'https://unpkg.com/@mysten/sui@0.54.1/dist/index.js';
+      fallbackScript.onerror = () => {
+        alert('Failed to load Sui SDK from both CDNs. Please check your network or try again later.');
+      };
+      document.head.appendChild(fallbackScript);
+    }
+  </script>
 </head>
 <body class="bg-cream text-navy">
   <!-- Header -->

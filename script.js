@@ -19,14 +19,16 @@ const diceResult = document.getElementById('diceResult');
 // Wallet connection function
 async function connectSlushWallet() {
   try {
-    // Check for Sui SDK with retry
+    // Check for Sui SDK with extended retry
     if (!window.Sui) {
-      console.warn('Sui SDK not loaded. Attempting to retry...');
+      console.warn('Sui SDK not loaded. Retrying in 1 second...');
       await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s
       if (!window.Sui) {
-        throw new Error('Sui SDK failed to load. Please check your network, disable ad-blockers, or try a different browser.');
+        console.error('Sui SDK still not loaded. Checking network and browser settings.');
+        throw new Error('Sui SDK failed to load. Please disable ad-blockers, check your network, or try a different browser (e.g., Chrome).');
       }
     }
+    console.log('Sui SDK loaded successfully.');
 
     // Initialize SuiClient with fallback RPCs
     const { SuiClient } = window.Sui;
@@ -37,19 +39,25 @@ async function connectSlushWallet() {
         'https://sui-mainnet.rpcpool.com'
       ]
     });
+    console.log('SuiClient initialized with Mainnet RPC.');
 
     // Check for Slush Wallet
     const slushWallet = window.suiWallet;
     if (!slushWallet) {
-      throw new Error('Slush Wallet extension not detected. Please install it from the Chrome Web Store or ensure it is enabled.');
+      console.error('Slush Wallet not detected.');
+      throw new Error('Slush Wallet extension not detected. Please install it from the Chrome Web Store or ensure it is enabled and set to Sui Mainnet.');
     }
+    console.log('Slush Wallet detected.');
 
     // Request connection permissions
+    console.log('Requesting wallet permissions...');
     await slushWallet.requestPermissions();
 
     // Get wallet accounts
+    console.log('Fetching wallet accounts...');
     const accounts = await slushWallet.getAccounts();
     if (accounts.length === 0) {
+      console.error('No accounts found in Slush Wallet.');
       throw new Error('No accounts found in Slush Wallet. Please set up or import an account.');
     }
 
@@ -71,8 +79,10 @@ async function connectSlushWallet() {
 // Event listeners for wallet connection
 connectWalletBtn.addEventListener('click', () => {
   if (!isWalletConnected) {
+    console.log('Opening wallet modal.');
     walletModal.classList.remove('hidden');
   } else {
+    console.log('Disconnecting wallet.');
     isWalletConnected = false;
     walletAddress = null;
     connectWalletBtn.textContent = 'Connect Wallet';
@@ -83,10 +93,12 @@ connectWalletBtn.addEventListener('click', () => {
 });
 
 slushWalletBtn.addEventListener('click', () => {
+  console.log('Slush Wallet button clicked.');
   connectSlushWallet();
 });
 
 closeModalBtn.addEventListener('click', () => {
+  console.log('Closing wallet modal.');
   walletModal.classList.add('hidden');
 });
 
