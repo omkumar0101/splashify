@@ -19,16 +19,23 @@ const diceResult = document.getElementById('diceResult');
 // Wallet connection function
 async function connectSlushWallet() {
   try {
-    // Check for Sui SDK
+    // Check for Sui SDK with retry
     if (!window.Sui) {
-      throw new Error('Sui SDK not loaded. Please check your network or CDN.');
+      console.warn('Sui SDK not loaded. Attempting to retry...');
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s
+      if (!window.Sui) {
+        throw new Error('Sui SDK failed to load. Please check your network, disable ad-blockers, or try a different browser.');
+      }
     }
 
-    // Initialize SuiClient with multiple RPCs for reliability
+    // Initialize SuiClient with fallback RPCs
     const { SuiClient } = window.Sui;
     const client = new SuiClient({
       url: 'https://fullnode.mainnet.sui.io',
-      fallbackUrls: ['https://rpc.mainnet.sui.io', 'https://sui-mainnet.rpcpool.com']
+      fallbackUrls: [
+        'https://rpc.mainnet.sui.io',
+        'https://sui-mainnet.rpcpool.com'
+      ]
     });
 
     // Check for Slush Wallet
