@@ -1,104 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Splashify - Decentralized Gaming</title>
-  <!-- CSP to allow Sui Mainnet RPC, CDNs, and Slush Wallet -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://jsdelivr.net; connect-src 'self' https://fullnode.mainnet.sui.io https://rpc.mainnet.sui.io https://sui-mainnet.rpcpool.com; img-src 'self' https://via.placeholder.com;">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <!-- Primary Sui SDK CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@mysten/sui.js@0.54.1/dist/index.js"></script>
-  <!-- Fallback Sui SDK CDN -->
-  <script>
-    if (!window.Sui) {
-      const fallbackScript = document.createElement('script');
-      fallbackScript.src = 'https://unpkg.com/@mysten/sui@0.54.1/dist/index.js';
-      fallbackScript.onerror = () => {
-        alert('Failed to load Sui SDK from both CDNs. Please check your network or try again later.');
-      };
-      document.head.appendChild(fallbackScript);
-    }
-  </script>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Splashify - Sugary Gaming on Sui</title>
+  <!-- CSP for local scripts and Sui Mainnet RPCs -->
+  <meta http-equiv='Content-Security-Policy' content="default-src 'self'; script-src 'self'; connect-src 'self' https://fullnode.mainnet.sui.io https://rpc.mainnet.sui.io https://sui-mainnet.rpcpool.com; img-src 'self' https://via.placeholder.com;">
+  <link href='https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css' rel='stylesheet'>
+  <link rel='stylesheet' href='styles.css'>
+  <!-- Local Sui SDK -->
+  <script src='/sui.js'></script>
 </head>
-<body class="bg-cream text-navy">
+<body class='bg-cream'>
   <!-- Header -->
-  <header class="bg-navy text-cream py-4">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-3xl font-bold">Splashify</h1>
-      <button id="connectWallet" class="bg-pink text-cream px-4 py-2 rounded hover:bg-green">Connect Wallet</button>
+  <header class='header'>
+    <div class='container'>
+      <h1 class='logo'>Splashify</h1>
+      <button id='connectWallet' class='btn btn-primary wallet-btn'>Connect Wallet</button>
     </div>
   </header>
 
   <!-- Hero Section -->
-  <section class="container mx-auto py-12 text-center">
-    <h2 class="text-4xl font-bold mb-4">Welcome to Splashify!</h2>
-    <p class="text-lg mb-6">Play exciting blockchain games in demo mode!</p>
+  <section class='hero'>
+    <div class='container text-center'>
+      <h2 class='hero-title'>Join the Sugary Adventure!</h2>
+      <p class='hero-text'>Experience thrilling blockchain games on Sui with Splashify!</p>
+      <button id='connectWalletHero' class='btn btn-primary'>Play Now</button>
+    </div>
   </section>
 
   <!-- Games Section -->
-  <section class="container mx-auto py-12">
-    <h2 class="text-3xl font-bold text-center mb-8">Our Games</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+  <section class='games container'>
+    <h2 class='section-title'>Our Sugary Games</h2>
+    <div class='game-grid'>
       <!-- Coinflip -->
-      <div class="game-card bg-teal text-cream p-6 rounded-lg shadow-lg">
-        <h3 class="text-2xl font-bold mb-4">Coinflip</h3>
-        <p class="mb-4">Guess heads or tails to test your luck!</p>
-        <select id="coinflipGuess" class="mb-4 p-2 rounded">
-          <option value="heads">Heads</option>
-          <option value="tails">Tails</option>
+      <div class='game-card'>
+        <h3 class='game-title'>Coinflip</h3>
+        <p class='game-desc'>Flip the coin and test your luck!</p>
+        <select id='coinflipGuess' class='form-input'>
+          <option value='heads'>Heads</option>
+          <option value='tails'>Tails</option>
         </select>
-        <button id="playCoinflip" class="bg-pink text-cream px-4 py-2 rounded hover:bg-green">Flip Coin</button>
-        <p id="coinflipResult" class="mt-4"></p>
+        <button id='playCoinflip' class='btn btn-primary'>Play Now</button>
+        <p id='coinflipResult' class='game-result'></p>
       </div>
 
       <!-- Lootboxes -->
-      <div class="game-card bg-teal text-cream p-6 rounded-lg shadow-lg">
-        <h3 class="text-2xl font-bold mb-4">Lootboxes</h3>
-        <p class="mb-4">Buy a Mystery Box and reveal rare items!</p>
-        <div class="flex items-center">
-          <button id="buyLootbox" class="bg-pink text-cream px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled>Buy Lootbox</button>
-          <span class="ml-2 text-navy">Coming Soon</span>
+      <div class='game-card'>
+        <h3 class='game-title'>Lootboxes</h3>
+        <p class='game-desc'>Unlock sweet surprises!</p>
+        <div class='flex items-center'>
+          <button id='buyLootbox' class='btn btn-primary disabled' disabled>Play Now</button>
+          <span class='coming-soon'>Coming Soon</span>
         </div>
-        <p id="lootboxResult" class="mt-4"></p>
+        <p id='lootboxResult' class='game-result'></p>
       </div>
 
       <!-- Dice -->
-      <div class="game-card bg-teal text-cream p-6 rounded-lg shadow-lg">
-        <h3 class="text-2xl font-bold mb-4">Dice</h3>
-        <p class="mb-4">Guess the roll (1–6) to test your luck!</p>
-        <select id="diceGuess" class="mb-4 p-2 rounded">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
+      <div class='game-card'>
+        <h3 class='game-title'>Dice</h3>
+        <p class='game-desc'>Roll the dice and win big!</p>
+        <select id='diceGuess' class='form-input'>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='3'>3</option>
+          <option value='4'>4</option>
+          <option value='5'>5</option>
+          <option value='6'>6</option>
         </select>
-        <button id="rollDice" class="bg-pink text-cream px-4 py-2 rounded hover:bg-green">Roll Dice</button>
-        <p id="diceResult" class="mt-4"></p>
+        <button id='rollDice' class='btn btn-primary'>Play Now</button>
+        <p id='diceResult' class='game-result'></p>
       </div>
     </div>
   </section>
 
   <!-- Wallet Modal -->
-  <div id="walletModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-cream p-6 rounded-lg shadow-lg max-w-md w-full">
-      <h3 class="text-2xl font-bold text-navy mb-4">Connect to Splashify</h3>
-      <p class="text-navy mb-4">Connect using Slush Wallet on Sui Mainnet:</p>
-      <button id="slushWallet" class="bg-pink text-cream px-4 py-2 rounded hover:bg-green w-full mb-2 flex items-center">
-        <img src="https://via.placeholder.com/24" alt="Slush Wallet Icon" class="mr-2"> Slush Wallet
+  <div id='walletModal' class='modal hidden'>
+    <div class='modal-content'>
+      <h3 class='modal-title'>Connect to Splashify</h3>
+      <p class='modal-text'>Use Slush Wallet to join the fun on Sui Mainnet!</p>
+      <button id='slushWallet' class='btn btn-primary flex items-center'>
+        <img src='https://via.placeholder.com/24' alt='Slush Wallet Icon' class='mr-2'> Slush Wallet
       </button>
-      <button id="closeModal" class="bg-navy text-cream px-4 py-2 rounded hover:bg-green w-full">Cancel</button>
+      <button id='closeModal' class='btn btn-secondary'>Cancel</button>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer class="bg-navy text-cream py-4 text-center">
-    <p>© 2025 Splashify. All rights reserved.</p>
+  <footer class='footer'>
+    <div class='container text-center'>
+      <p>© 2025 Splashify. All rights reserved.</p>
+      <div class='social-links'>
+        <a href='#' class='social-link'>Twitter</a>
+        <a href='#' class='social-link'>Discord</a>
+      </div>
+    </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src='script.js'></script>
 </body>
 </html>
